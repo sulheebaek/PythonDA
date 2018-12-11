@@ -2,6 +2,7 @@
 # pip install Pillow
 from PIL import Image
 import matplotlib.pyplot as plt
+from random import choice
 
 def create_candidates():
     candidates = {"1": {"picture":"images/1.jpg"}, 
@@ -14,9 +15,23 @@ def create_candidates():
                   "8": {"picture":"images/8.jpg"}}
     return candidates
 
-def semifinal(all, selectedlist):
+def game(all, selectedlist):
     candidates = {k:all[k] for k in selectedlist}
-    return candidates
+    lst = candidates.keys()
+    selected = []
+    while len(lst) > 0:
+        c1 = choice(lst)
+        lst.remove(c1)
+        c2 = choice(lst)
+        lst.remove(c2)
+        imgshow(c[c1]["picture"], c[c2]["picture"])
+        plt.show()
+        inputvalue = input("select 1 or 2: ")
+        if inputvalue == 1:
+            selected.append(c1)
+        else:
+            selected.append(c2)
+    return selected
 
 def imgshow(file1, file2):
     img1 = Image.open(file1)
@@ -28,21 +43,13 @@ def imgshow(file1, file2):
 
 if __name__ == "__main__":
     c = create_candidates()
-    lst = c.keys()
-    imgshow(c[lst[0]]["picture"], c[lst[0]]["picture"])
-    plt.show()
-    selected = []
-    for l in lst:
-        value = input("select 0 or 1")
-        selected.append(value)
-    print(selected)
+    semifinals = game(c, c.keys())
+    print("semifinal candidates: ", semifinals)
+    finals = game(c, semifinals)
+    print("final candidates: ", finals)    
+    winner = game(c, finals)
+    print("winnder is: ", winner)
 
-
-
-
-
-
-
-
-
+            
+            
     
